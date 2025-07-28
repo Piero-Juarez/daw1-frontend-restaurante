@@ -1,0 +1,29 @@
+
+.welcome__contenedor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+
+  .welcome__contenedor-logo {
+    flex: 1;
+    text-align: center;
+  }
+
+  .welcome__contenedor-informacion {
+    flex: 1;
+
+    h1, h2 {
+      color: #000000;
+    }
+
+    h1 {
+      font-size: 52px;
+      font-weight: bolder;
+    }
+
+    h2 {
+      font-size: 28px;
+    }
+  }
+}

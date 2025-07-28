@@ -1,0 +1,32 @@
+
+<div class="contenedor">
+  <!-- FORMULARIO LOGIN -->
+  <div class="contenedor-formulario">
+    <div class="logo">
+      <img src="img/logo_invertido.svg" alt="Logo Principal" />
+    </div>
+    <div class="formulario">
+      <h2 class="formulario-titulo">INICIAR SESIÓN</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="formulario-input">
+          <label for="correo">Correo Electrónico</label>
+          <input id="correo" type="email" formControlName="correo" placeholder="Ingrese su correo electrónico">
+        </div>
+        <div class="formulario-input">
+          <label for="clave">Contraseña</label>
+          <input id="clave" type="password" formControlName="clave" placeholder="Ingrese su contraseña">
+        </div>
+        <button class="formulario-boton" type="submit" [disabled]="loginForm.invalid">INGRESAR</button>
+        @if (errorMessage) {
+          <div style="margin-top: 28px;">
+            <p>{{errorMessage}}</p>
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+  <!-- IMAGEN DESTACADA -->
+  <div class="contenedor-imagen">
+    <img src="img/img_login.webp" alt="Imagen destacada" />
+  </div>
+</div>
