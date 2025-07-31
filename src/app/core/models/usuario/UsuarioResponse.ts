@@ -1,5 +1,5 @@
 
-export interface Usuario {
+export interface UsuarioResponse {
   id: number;
   nombre: string;
   apellido: string;

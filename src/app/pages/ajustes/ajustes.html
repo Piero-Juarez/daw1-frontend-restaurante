@@ -1,0 +1,14 @@
+
+<!-- CONTENEDOR PRINCIPAL -->
+<div class="ajustes__contenedor">
+  <!-- OPCIONES DE LOS AJUSTES -->
+  <div class="ajustes__contenedor-opciones">
+    <button [routerLink]="['usuarios']" routerLinkActive="link-activo"><p data-text="USUARIOS">USUARIOS</p></button>
+    <button [routerLink]="['categorias']" routerLinkActive="link-activo"><p data-text="CATEGORÍAS">CATEGORÍAS</p></button>
+    <button><p data-text="MESAS">MESAS</p></button>
+  </div>
+  <!-- CONTENEDOR DE LOS AJUSTES -->
+  <div class="ajustes__contenedor-componentes">
+    <router-outlet></router-outlet>
+  </div>
+</div>

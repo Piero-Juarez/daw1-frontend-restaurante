@@ -1,0 +1,89 @@
+
+<div>
+  <h2>Listado de Usuarios:</h2>
+</div>
+
+<div class="usuarios__tarjetas-grid">
+  @for (usuario of usuarios(); track usuario.id) {
+    <div class="usuarios__tarjeta">
+      <div class="usuarios__tarjeta-info-contenedor">
+        <span class="material-symbols-rounded">
+          assignment_ind
+        </span>
+        <div class="usuarios__tarjeta-info">
+          <p><strong>ID:</strong> {{usuario.id}}</p>
+          <p><strong>Nombre:</strong> {{usuario.nombre}}</p>
+          <p><strong>Apellido:</strong> {{usuario.apellido}}</p>
+          <p><strong>Correo:</strong> {{usuario.correo}}</p>
+          <p><strong>Rol:</strong> {{usuario.rol}}</p>
+        </div>
+      </div>
+      <div class="usuarios__tarjeta-acciones">
+        <button class="btn editar" (click)="abrirModalCrearEditar(usuario)">✏️ Editar</button>
+        <button class="btn eliminar" (click)="abrirModalEliminar(usuario)">🗑️ Eliminar</button>
+      </div>
+    </div>
+  }
+</div>
+
+<div class="boton-circulo" (click)="abrirModalCrearEditar()">+</div>
+
+<ajustes-modal [estadoAbierto]="modalEliminarVisible" (cerrarModal)="cerrarModalEliminar()">
+  <div slot="header">
+    <h3>Eliminar Usuario</h3>
+  </div>
+
+  <div style="margin: 30px 0;">
+    <p>¿Estás seguro de eliminar este usuario? esta opción no se podrá deshacer.</p>
+  </div>
+
+  <div slot="footer">
+    <button (click)="cerrarModalEliminar()" class="btn">Cancelar ❌</button>
+    <button (click)="confirmarEliminacion()" class="btn">Eliminar ✅</button>
+  </div>
+</ajustes-modal>
+
+<ajustes-modal [estadoAbierto]="modalCrearEditarVisible" (cerrarModal)="cerrarModalEditar()">
+  <div slot="header">
+    <h3> {{ usuarioSeleccionado() ? 'Editar Usuario' : 'Crear Nuevo Usuario' }} </h3>
+  </div>
+
+  <div>
+    <form id="edicionUsuario" [formGroup]="usuarioForm" (submit)="confirmarCrearEditar()">
+      <div class="input-contenedor">
+        <input id="nombre" type="text" formControlName="nombre" required>
+        <label for="nombre" class="label">Nombre</label>
+        <div class="lineado"></div>
+      </div>
+      <div class="input-contenedor">
+        <input id="apellido" type="text" formControlName="apellido" required>
+        <label for="apellido" class="label">Apellido</label>
+        <div class="lineado"></div>
+      </div>
+      <div class="input-contenedor">
+        <input id="correo" type="email" formControlName="correo" required>
+        <label for="correo" class="label">Correo</label>
+        <div class="lineado"></div>
+      </div>
+      <div class="input-contenedor">
+        <input id="clave" type="password" formControlName="clave" required>
+        <label for="clave" class="label">Contraseña</label>
+        <div class="lineado"></div>
+      </div>
+      <div class="input-contenedor-select">
+        <label for="rol">Rol</label>
+        <select id="rol" formControlName="rol">
+          <option value="ADMINISTRADOR">Administrador</option>
+          <option value="TRABAJADOR">Trabajador</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div slot="footer">
+    <button (click)="cerrarModalEditar()" class="btn">Cancelar ❌</button>
+    <button form="edicionUsuario" type="submit" [disabled]="usuarioForm.invalid" class="btn">
+      {{ usuarioSeleccionado() ? 'Actualizar ✅' : 'Crear ✅' }}
+    </button>
+  </div>
+</ajustes-modal>

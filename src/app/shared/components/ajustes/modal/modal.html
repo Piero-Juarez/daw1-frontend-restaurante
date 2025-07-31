@@ -1,0 +1,16 @@
+
+@if (estadoAbierto) {
+  <div class="modal-overlay">
+    <div class="modal-contenido">
+      <div class="modal-header">
+        <ng-content select="[slot='header']"></ng-content>
+      </div>
+      <div class="modal-body" style="margin: 30px 0;">
+        <ng-content></ng-content>
+      </div>
+      <div class="modal-footer">
+        <ng-content select="[slot='footer']"></ng-content>
+      </div>
+    </div>
+  </div>
+}

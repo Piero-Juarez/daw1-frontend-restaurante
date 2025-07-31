@@ -1,0 +1,91 @@
+
+/* INPUTS PERSONALIZADOS */
+.input-contenedor {
+  position: relative;
+  margin: 50px auto;
+  width: 350px;
+}
+
+.input-contenedor input {
+  font-size: 20px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  padding: 5px 0;
+  background-color: transparent;
+  outline: none;
+}
+
+.input-contenedor label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: black;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.input-contenedor input:focus ~ .label,
+.input-contenedor input:valid ~ .label {
+  top: -20px;
+  font-size: 16px;
+  color: #e7191f;
+}
+
+.input-contenedor .lineado {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #e7191f;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.input-contenedor input:focus ~ .lineado,
+.input-contenedor input:valid ~ .lineado {
+  transform: scaleX(1);
+}
+
+/* BOTÓN FLOTANTE */
+.boton-circulo {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #e7191f;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton-circulo:hover {
+  background-color: #c6171a;
+}
+
+/* BOTÓN ACEPTAR - RECHAZAR */
+.btn {
+  all: unset;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn.editar,
+.btn.eliminar {
+  background-color: #FFEFF0;
+  color: #e7191f;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}

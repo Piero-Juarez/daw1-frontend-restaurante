@@ -7,8 +7,8 @@ export interface MenuItem {
 
 export function listadoMenu(): MenuItem[] {
   return [
-    {urlPath: 'Ordenes', icono: 'notifications', titulo: 'Ordenes'},
-    {urlPath: 'Platillos', icono: 'dinner_dining', titulo: 'Platillos'},
-    {urlPath: 'Ajustes', icono: 'settings', titulo: 'Ajustes'}
+    {urlPath: 'ordenes', icono: 'notifications', titulo: 'Ordenes'},
+    {urlPath: 'platillos', icono: 'dinner_dining', titulo: 'Platillos'},
+    {urlPath: 'ajustes', icono: 'settings', titulo: 'Ajustes'}
   ];
 }

@@ -1,10 +1,10 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpContext, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Usuario} from '../../models/Usuario';
-import {Credenciales} from '../../models/Credenciales';
+import {UsuarioResponse} from '../../models/usuario/UsuarioResponse';
+import {Credenciales} from '../../models/auth/Credenciales';
 import {BehaviorSubject, catchError, Observable, of, switchMap, tap, throwError} from 'rxjs';
-import {AuthResponse} from '../../models/AuthResponse';
+import {AuthResponse} from '../../models/auth/AuthResponse';
 import {BYPASS_TOKEN_INTERCEPTOR} from '../../contexts/http-context';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class AuthService {
   private router = inject(Router)
   private authUrl = 'http://localhost:8080/api'
 
-  public currentUser = signal<Usuario | null>(null)
+  public currentUser = signal<UsuarioResponse | null>(null)
   public isLoggedIn = computed(() => this.currentUser() !== null)
 
   private isRefreshing = false;
@@ -44,7 +44,7 @@ export class AuthService {
     return localStorage.getItem('refresh_token');
   }
 
-  login(credenciales: Credenciales): Observable<Usuario | null> {
+  login(credenciales: Credenciales): Observable<UsuarioResponse | null> {
     return this.http.post<AuthResponse>(`${this.authUrl}/auth/login`, credenciales).pipe(
       tap(response => this.saveTokens(response)),
       switchMap(() => this.fetchCurrentUser()),
@@ -55,8 +55,8 @@ export class AuthService {
     );
   }
 
-  fetchCurrentUser(): Observable<Usuario | null> {
-    return this.http.get<Usuario>(`${this.authUrl}/usuarios/me`).pipe(
+  fetchCurrentUser(): Observable<UsuarioResponse | null> {
+    return this.http.get<UsuarioResponse>(`${this.authUrl}/usuarios/me`).pipe(
       tap(user => this.currentUser.set(user)),
       catchError(() => {
         return of(null);

@@ -1,0 +1,62 @@
+
+<div>
+  <h2>Listado de Categorías:</h2>
+</div>
+
+<div class="categorias__tarjetas-grid">
+  @for (categoria of categorias(); track categoria.id) {
+    <div class="categorias__tarjeta">
+      <span class="material-symbols-rounded">category</span>
+      <div class="categorias__tarjeta-info">
+        <p><strong>ID:</strong> {{categoria.id}}</p>
+        <p><strong>Nombre:</strong> {{categoria.nombre}}</p>
+        <p><strong>Descripción:</strong> {{categoria.descripcion}}</p>
+      </div>
+      <div class="categorias__tarjeta-acciones">
+        <button class="btn editar" (click)="abrirModalCrearEditar(categoria)">✏️ Editar</button>
+        <button class="btn eliminar" (click)="abrirModalEliminar(categoria)">🗑️ Eliminar</button>
+      </div>
+    </div>
+  }
+</div>
+
+<div class="boton-circulo" (click)="abrirModalCrearEditar()">+</div>
+
+<ajustes-modal [estadoAbierto]="modalEliminarVisible" (cerrarModal)="cerrarModalEliminar()">
+  <div slot="header">
+    <h3>Eliminar Categoría</h3>
+  </div>
+
+  <p>¿Estás seguro de eliminar esta categoría? esta opción no se podrá deshacer.</p>
+
+  <div slot="footer">
+    <button (click)="cerrarModalEliminar()" class="btn">Cancelar ❌</button>
+    <button (click)="confirmarEliminacion()" class="btn">Eliminar ✅</button>
+  </div>
+</ajustes-modal>
+
+<ajustes-modal [estadoAbierto]="modalCrearEditarVisible" (cerrarModal)="cerrarModalCrearEditar()">
+  <div slot="header">
+    <h3> {{ categoriaSeleccionada() ? 'Editar Categoría' : 'Crear Nueva Categoría' }} </h3>
+  </div>
+
+  <form id="edicionCategoria" [formGroup]="categoriaForm" (submit)="confirmarCrearEditar()">
+    <div class="input-contenedor">
+      <input id="nombre" type="text" formControlName="nombre" required>
+      <label for="nombre" class="label">Nombre</label>
+      <div class="lineado"></div>
+    </div>
+    <div class="input-contenedor">
+      <input id="descripcion" type="text" formControlName="descripcion" required>
+      <label for="descripcion" class="label">Descripción</label>
+      <div class="lineado"></div>
+    </div>
+  </form>
+
+  <div slot="footer">
+    <button (click)="cerrarModalCrearEditar()" class="btn">Cancelar ❌</button>
+    <button form="edicionCategoria" type="submit" [disabled]="categoriaForm.invalid" class="btn">
+      {{ categoriaSeleccionada() ? 'Actualizar ✅' : 'Crear ✅' }}
+    </button>
+  </div>
+</ajustes-modal>

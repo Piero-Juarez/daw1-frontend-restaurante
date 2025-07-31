@@ -6,10 +6,10 @@
   <div class="home__contenedor-menu">
     <div class="home__contenedor-menu-lista">
       @for (item of menuItem(); track item.urlPath) {
-        <a routerLinkActive="active-link" class="home__contenedor-menu-lista-item">
+        <div [routerLink]="item.urlPath" class="home__contenedor-menu-lista-item">
           <span class="material-symbols-rounded home__icon-material">{{item.icono}}</span>
           <p>{{item.titulo}}</p>
-        </a>
+        </div>
       }
     </div>
     <div class="home__contenedor-menu-botones">

@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../core/services/auth/auth.service';
 import {Router} from '@angular/router';
-import {Credenciales} from '../../core/models/Credenciales';
+import {Credenciales} from '../../core/models/auth/Credenciales';
 
 @Component({
   selector: 'app-login',
