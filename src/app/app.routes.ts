@@ -7,6 +7,7 @@ import {userSessionResolver} from './core/resolvers/user-session.resolver';
 import {Ajustes} from './pages/ajustes/ajustes';
 import {Usuarios} from './pages/ajustes/sub-pages/usuarios/usuarios';
 import {Categorias} from './pages/ajustes/sub-pages/categorias/categorias';
+import {Mesas} from './pages/ajustes/sub-pages/mesas/mesas';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -26,6 +27,7 @@ export const routes: Routes = [
         children: [
           { path: 'usuarios', component: Usuarios },
           { path: 'categorias', component: Categorias },
+          { path: 'mesas', component: Mesas },
           { path: '', redirectTo: 'usuarios', pathMatch: "full" }
         ]
       }

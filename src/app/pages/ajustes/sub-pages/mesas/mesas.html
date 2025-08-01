@@ -1,0 +1,70 @@
+
+<div>
+  <h2>Listado de Mesas:</h2>
+</div>
+
+<div class="mesas__tarjetas-grid">
+  @for (mesa of mesas(); track mesa.id) {
+    <div class="mesas__tarjeta">
+      <div class="mesas__tarjeta-imagen">
+        <span class="material-symbols-rounded">table_restaurant</span>
+        <div class="mesas__tarjeta-info">
+          <p><strong>Nº:</strong> {{mesa.numero}}</p>
+        </div>
+      </div>
+      <p><strong>Capacidad:</strong> {{mesa.capacidad}}</p>
+      <div class="mesas__tarjeta-acciones">
+        <button class="btn editar" (click)="abrirModalCrearEditar(mesa)">✏️ Editar</button>
+        <button class="btn eliminar" (click)="abrirModalEliminar(mesa)">🗑️ Eliminar</button>
+      </div>
+    </div>
+  }
+</div>
+
+<div class="boton-circulo" (click)="abrirModalCrearEditar()">+</div>
+
+<ajustes-modal [estadoAbierto]="modalEliminarVisible" (cerrarModal)="cerrarModalEliminar()">
+  <div slot="header">
+    <h3>Eliminar Mesa</h3>
+  </div>
+
+  <p>¿Estás seguro de eliminar esta categoría?</p>
+  <p>Esta opción no se podrá deshacer.</p>
+
+  <div slot="footer">
+    <button (click)="cerrarModalEliminar()" class="btn">Cancelar ❌</button>
+    <button (click)="confirmarEliminacion()" class="btn">Eliminar ✅</button>
+  </div>
+</ajustes-modal>
+
+<ajustes-modal [estadoAbierto]="modalCrearEditarVisible" (cerrarModal)="cerrarModalCrearEditar()">
+  <div slot="header">
+    <h3> {{ mesaSeleccionada() ? 'Editar Mesa' : 'Crear Nueva Mesa' }} </h3>
+  </div>
+
+  <form id="edicionCategoria" [formGroup]="mesaForm" (submit)="confirmarCrearEditar()">
+    <div class="input-contenedor">
+      @if (mesaSeleccionada()) {
+        <input id="numero" type="text" formControlName="numero" required readonly>
+        <label for="numero" class="label">Nº de Mesa</label>
+        <div class="lineado"></div>
+      } @else {
+        <input id="numero" type="text" formControlName="numero" required>
+        <label for="numero" class="label">Nº de Mesa</label>
+        <div class="lineado"></div>
+      }
+    </div>
+    <div class="input-contenedor">
+      <input id="capacidad" type="text" formControlName="capacidad" required>
+      <label for="capacidad" class="label">Capacidad de la Mesa</label>
+      <div class="lineado"></div>
+    </div>
+  </form>
+
+  <div slot="footer">
+    <button (click)="cerrarModalCrearEditar()" class="btn">Cancelar ❌</button>
+    <button form="edicionCategoria" type="submit" [disabled]="mesaForm.invalid" class="btn">
+      {{ mesaSeleccionada() ? 'Actualizar ✅' : 'Crear ✅' }}
+    </button>
+  </div>
+</ajustes-modal>

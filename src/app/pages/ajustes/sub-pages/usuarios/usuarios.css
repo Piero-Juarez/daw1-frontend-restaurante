@@ -48,7 +48,6 @@
 .input-contenedor-select {
   position: relative;
   margin: 40px auto;
-  width: 300px;
   display: flex;
   flex-direction: column;
 }

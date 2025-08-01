@@ -1,11 +1,11 @@
 
-.categorias__tarjetas-grid {
+.mesas__tarjetas-grid {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   padding: 24px;
 
-  .categorias__tarjeta {
+  .mesas__tarjeta {
     background-color: #e7191f;
     border-radius: 12px;
     padding: 16px;
@@ -13,31 +13,46 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 16px;
     transition: transform 0.2s;
 
-    .material-symbols-rounded {
-      font-weight: bold;
-      font-size: 100px;
+    p {
+      color: white;
+      margin-top: -20px;
+      font-size: 18px;
     }
 
-    .categorias__tarjeta-info {
+    .mesas__tarjeta-imagen {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mesas__tarjeta-info {
       text-align: center;
+      margin-top: 20px;
 
       p {
         color: white;
+        font-size: 24px;
+        font-weight: bold;
       }
     }
 
-    .categorias__tarjeta-acciones {
+    .material-symbols-rounded {
+      font-weight: bold;
+      font-size: 120px;
+    }
+
+    .mesas__tarjeta-acciones {
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
     }
   }
 
-  .categorias__tarjeta:hover {
+  .mesas__tarjeta:hover {
     transform: translateY(-6px);
   }
 }

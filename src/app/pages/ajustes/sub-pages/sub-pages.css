@@ -31,6 +31,11 @@
   font-size: 16px;
   color: #e7191f;
 }
+.input-contenedor input:read-only ~ .label {
+  top: -20px;
+  font-size: 16px;
+  color: #e7191f;
+}
 
 .input-contenedor .lineado {
   position: absolute;
@@ -45,6 +50,9 @@
 
 .input-contenedor input:focus ~ .lineado,
 .input-contenedor input:valid ~ .lineado {
+  transform: scaleX(1);
+}
+.input-contenedor input:read-only ~ .lineado {
   transform: scaleX(1);
 }
 
