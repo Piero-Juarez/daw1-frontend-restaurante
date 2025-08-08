@@ -8,6 +8,8 @@ import {Ajustes} from './pages/ajustes/ajustes';
 import {Usuarios} from './pages/ajustes/sub-pages/usuarios/usuarios';
 import {Categorias} from './pages/ajustes/sub-pages/categorias/categorias';
 import {Mesas} from './pages/ajustes/sub-pages/mesas/mesas';
+import {Menu} from './pages/menu/menu';
+import {Ordenes} from './pages/ordenes/ordenes';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -21,6 +23,8 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'bienvenida', pathMatch: "full" },
       { path: 'bienvenida', component: Welcome },
+      { path: 'menu', component: Menu },
+      { path: 'ordenes', component: Ordenes },
       {
         path: 'ajustes',
         component: Ajustes,

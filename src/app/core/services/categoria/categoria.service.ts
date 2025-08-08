@@ -10,8 +10,8 @@ import {CategoriaRequest} from '../../models/categoria/CategoriaRequest';
 })
 export class CategoriaService {
 
-  private http = inject(HttpClient)
-  private fullApiUrl = `${environment.apiUrl}/categorias`
+  private http = inject(HttpClient);
+  private fullApiUrl = `${environment.apiUrl}/categorias`;
 
   // OBTENER LISTADO DE CATEGORÍAS
   obtenerCategorias(): Observable<CategoriaResponse[]> {

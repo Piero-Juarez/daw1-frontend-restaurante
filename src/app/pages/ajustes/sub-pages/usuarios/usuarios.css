@@ -4,6 +4,8 @@
   gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   padding: 24px;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
 
   .usuarios__tarjeta {
     background-color: #e7191f;

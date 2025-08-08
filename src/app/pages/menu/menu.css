@@ -1,0 +1,137 @@
+
+.menu__items-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr 1fr;
+  padding: 24px;
+  margin-top: 12px;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
+
+  .menu__items {
+    background-color: #e7191f;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+
+    .menu__items-contenedor {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+
+      .menu__items-info {
+        display: flex;
+        gap: 18px;
+
+        h2, p, strong {
+          color: white;
+        }
+
+        .menu__items-imagen {
+
+          img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+          }
+        }
+      }
+      .menu__items-estado {
+        margin-left: auto;
+
+        select {
+          padding: 8px;
+          border-radius: 12px;
+          border: seagreen solid 2px;
+          background-color: seagreen;
+          color: white;
+        }
+
+        .disabled {
+          background-color: #ccc;
+          color: #333;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .menu__items-acciones {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      justify-content: center;
+    }
+  }
+
+  .menu__items:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.btn {
+  all: unset;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn.editar,
+.btn.eliminar {
+  background-color: #FFEFF0;
+  color: #e7191f;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.menu__paginacion {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  gap: 16px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    background-color: #FFEFF0;
+    border: #e7191f 2px solid;
+    color: black;
+
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: bold;
+
+    transition: background 0.2s, transform 0.2s;
+
+    .menu__icon-material-left {
+      font-weight: bold;
+      margin-right: 3px;
+    }
+
+    .menu__icon-material-right {
+      font-weight: bold;
+      margin-left: 3px;
+    }
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    background-color: #e7191f;
+    color: white;
+  }
+
+  .active {
+    background-color: #e7191f;
+    color: white;
+  }
+}
