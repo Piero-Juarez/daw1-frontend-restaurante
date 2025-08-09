@@ -1,88 +1,105 @@
-
-<div>
-  @for (categoria of categorias; track categoria.id) {
-    <button type="button" (click)="seleccionarCategoria(categoria.nombre)" [class.active]="categoria.nombre === buscarPorCategoria">
-      {{ categoria.nombre }}
-    </button>
-  }
-  @if (buscarPorCategoria) {
-    <button type="button" (click)="limpiarFiltroCategoria()">
-      &times; Ver Todas
-    </button>
-  }
-</div>
-
-<div>
-  <div>
-    <button>Añadir Nuevo Item</button>
-  </div>
-  <form (ngSubmit)="onBuscar()">
-    <input type="text" [(ngModel)]="buscarPorNombre" name="nombre" placeholder="Buscar por nombre..." />
-    <button type="submit">Buscar</button>
-    <button type="button" (click)="limpiarBusqueda()">Limpiar</button>
-  </form>
-</div>
-
-<div class="menu__items-grid">
-  @if (items.length === 0) {
-    <div>
-      <p>No se encontraron resultados.</p>
-    </div>
-  }
-  @for (item of items; track item.id) {
-    <div class="menu__items">
-      <div class="menu__items-contenedor">
-        <div class="menu__items-info">
-          <div class="menu__items-imagen">
-            <img src="{{item.enlace_imagen}}" alt="{{item.nombre}}" />
-          </div>
-          <div class="menu__items-info-texto">
-            <h2>{{item.nombre}}</h2>
-            <br />
-            <p>{{item.descripcion}}</p>
-            <p><strong>Categoría:</strong> {{item.categoria.nombre}}</p>
-            <p><strong>Precio:</strong> S/{{item.precio.toFixed(2)}}</p>
-          </div>
-        </div>
-        <div class="menu__items-estado">
-          <select [class.disabled]="item.estado === 'Deshabilitado'" (change)="cambiarEstado(item.id)">
-            <option value="1">Disponible</option>
-            <option value="2">Deshabilitado</option>
-          </select>
-        </div>
-      </div>
-      <div class="menu__items-acciones">
-        <button class="btn editar">✏️ Editar</button>
-        <button class="btn eliminar">🗑️ Borrar</button>
-      </div>
-    </div>
-  }
-</div>
-
-@if (totalPages > 1) {
-  <nav class="menu__paginacion" aria-label="Paginación">
-    <button (click)="cargarDatos(0)" [disabled]="currentPage === 0">
-      <span class="material-symbols-rounded menu__icon-material-left">keyboard_double_arrow_left</span>
-      Primero
-    </button>
-    <button (click)="cargarDatos(currentPage - 1)" [disabled]="currentPage === 0">
-      <span class="material-symbols-rounded menu__icon-material-left">keyboard_arrow_left</span>
-      Anterior
-    </button>
-    @for (pageNum of pageNumbers; track pageNum) {
-      @if (pageNum !== '...') {
-        <button (click)="cargarDatos(pageNum - 1)" [class.active]="currentPage === pageNum - 1">{{pageNum}}</button>
-      } @else {
-        <p>...</p>
-      }
+<div class="menu-contenedor">
+  <div class="menu__categorias">
+    @for (categoria of categorias; track categoria.id) {
+      <button type="button" (click)="seleccionarCategoria(categoria.nombre)"
+              [class.active]="categoria.nombre === buscarPorCategoria">
+        {{ categoria.nombre }}
+      </button>
     }
-    <button (click)="cargarDatos(currentPage + 1)" [disabled]="currentPage >= totalPages - 1">
-      Siguiente
-      <span class="material-symbols-rounded menu__icon-material-right">keyboard_arrow_right</span>
-    </button>
-    <button (click)="cargarDatos(totalPages - 1)" [disabled]="currentPage >= totalPages - 1">
-      Último
-      <span class="material-symbols-rounded menu__icon-material-right">keyboard_double_arrow_right</span>
-    </button>
-  </nav>
-}
+    @if (buscarPorCategoria) {
+      <button type="button" (click)="limpiarFiltroCategoria()">
+        Eliminar Filtro
+        <span class="material-symbols-rounded">cancel</span>
+      </button>
+    }
+  </div>
+
+  <div class="menu__opciones">
+    <div class="menu__opciones-boton">
+      <button class="boton-opciones">
+        <span class="material-symbols-rounded">add</span>
+        Añadir Nuevo Item
+      </button>
+    </div>
+    <div class="menu__opciones-busqueda">
+      <form (ngSubmit)="onBuscar()">
+        <input type="text" [(ngModel)]="buscarPorNombre" name="nombre" placeholder="Buscar por nombre..."/>
+        <button type="submit" class="boton-opciones">
+          Buscar
+          <span class="material-symbols-rounded">search</span>
+        </button>
+        @if (buscarPorNombre) {
+          <button type="button" class="boton-opciones" (click)="limpiarBusqueda()">
+            Limpiar
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        }
+      </form>
+    </div>
+  </div>
+
+  <div class="menu__items-grid">
+    @if (items.length === 0) {
+      <div>
+        <p style="font-size: 24px;">No se encontraron resultados.</p>
+      </div>
+    }
+    @for (item of items; track item.id) {
+      <div class="menu__items">
+        <div class="menu__items-contenedor">
+          <div class="menu__items-info">
+            <div class="menu__items-imagen">
+              <img src="{{item.enlace_imagen}}" alt="{{item.nombre}}"/>
+            </div>
+            <div class="menu__items-info-texto">
+              <h2>{{ item.nombre }}</h2>
+              <p>{{ item.descripcion }}</p>
+              <br/>
+              <p><strong>Categoría:</strong> {{ item.categoria.nombre }}</p>
+              <p><strong>Precio:</strong> S/{{ item.precio.toFixed(2) }}</p>
+              <p><strong>IGV (18%):</strong> S/{{ (item.precio * 0.18) }}</p>
+            </div>
+          </div>
+          <div class="menu__items-estado">
+            <select [class.disabled]="item.estado === 'Deshabilitado'" (change)="cambiarEstado(item.id)">
+              <option value="DISPONIBLE" [selected]="item.estado === 'Disponible'">Disponible</option>
+              <option value="DESHABILITADO" [selected]="item.estado === 'Deshabilitado'">Deshabilitado</option>
+            </select>
+          </div>
+        </div>
+        <div class="menu__items-acciones">
+          <button class="btn editar">✏️ Editar Item</button>
+          <button class="btn eliminar">🗑️ Borrar de la Carta</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <nav class="menu__paginacion" aria-label="Paginación">
+      <button (click)="cargarDatos(0)" [disabled]="currentPage === 0">
+        <span class="material-symbols-rounded menu__icon-material-left">keyboard_double_arrow_left</span>
+        Primero
+      </button>
+      <button (click)="cargarDatos(currentPage - 1)" [disabled]="currentPage === 0">
+        <span class="material-symbols-rounded menu__icon-material-left">keyboard_arrow_left</span>
+        Anterior
+      </button>
+      @for (pageNum of pageNumbers; track pageNum) {
+        @if (pageNum !== '...') {
+          <button (click)="cargarDatos(pageNum - 1)" [class.active]="currentPage === pageNum - 1">{{ pageNum }}</button>
+        } @else {
+          <p>...</p>
+        }
+      }
+      <button (click)="cargarDatos(currentPage + 1)" [disabled]="currentPage >= totalPages - 1">
+        Siguiente
+        <span class="material-symbols-rounded menu__icon-material-right">keyboard_arrow_right</span>
+      </button>
+      <button (click)="cargarDatos(totalPages - 1)" [disabled]="currentPage >= totalPages - 1">
+        Último
+        <span class="material-symbols-rounded menu__icon-material-right">keyboard_double_arrow_right</span>
+      </button>
+    </nav>
+  }
+</div>

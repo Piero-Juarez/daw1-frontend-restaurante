@@ -22,7 +22,7 @@ export class Menu implements OnInit {
   currentPage: number = 0;
   totalPages: number = 0;
   totalElements: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 5;
 
   pageNumbers: (number | '...')[] = [];
 
@@ -45,7 +45,6 @@ export class Menu implements OnInit {
       : this.menuService.obtenerItemsMenu(page, this.pageSize);
     datoObservable.subscribe(response => {
       this.items = response.content;
-      console.log(response);
       this.currentPage = response.page.number;
       this.totalPages = response.page.totalPages;
       this.totalElements = response.page.totalElements;
