@@ -10,6 +10,7 @@ import {Categorias} from './pages/ajustes/sub-pages/categorias/categorias';
 import {Mesas} from './pages/ajustes/sub-pages/mesas/mesas';
 import {Menu} from './pages/menu/menu';
 import {Ordenes} from './pages/ordenes/ordenes';
+import {Pedido} from './pages/pedido/pedido';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -25,6 +26,7 @@ export const routes: Routes = [
       { path: 'bienvenida', component: Welcome },
       { path: 'menu', component: Menu },
       { path: 'ordenes', component: Ordenes },
+      { path: 'pedido', component: Pedido },
       {
         path: 'ajustes',
         component: Ajustes,

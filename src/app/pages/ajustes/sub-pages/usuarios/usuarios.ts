@@ -34,7 +34,7 @@ export class Usuarios implements OnInit, OnDestroy {
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
     correo: ['', [Validators.required, Validators.email]],
-    clave: ['TRABAJADOR'],
+    clave: ['CAMARERO'],
     rol: ['', Validators.required]
   })
 
@@ -115,7 +115,7 @@ export class Usuarios implements OnInit, OnDestroy {
         apellido: '',
         correo: '',
         clave: '',
-        rol: 'TRABAJADOR'
+        rol: 'CAMARERO'
       });
       this.usuarioForm.get('clave')?.setValidators([Validators.required]);
       this.usuarioForm.get('clave')?.updateValueAndValidity();

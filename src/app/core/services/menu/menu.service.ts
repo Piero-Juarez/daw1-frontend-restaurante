@@ -55,7 +55,7 @@ export class MenuService {
 
   // ACTUALIZAR EL ESTADO DE UN ITEM
   actualizarEstadoItemMenu(id: number, estado: EstadoItemMenuRequest): Observable<ItemMenuResponse> {
-    return this.http.put<ItemMenuResponse>(`${this.fullApiUrl}/cambiar-estado/${id}`, estado);
+    return this.http.patch<ItemMenuResponse>(`${this.fullApiUrl}/cambiar-estado/${id}`, estado);
   }
 
   // ELIMINAR UN ITEM POR SU ID

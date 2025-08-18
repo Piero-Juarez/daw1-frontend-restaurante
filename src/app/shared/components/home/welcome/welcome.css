@@ -27,3 +27,31 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .welcome__contenedor {
+    flex-direction: column;
+
+    .welcome__contenedor-logo{
+      flex: none;
+      margin-top: 18px;
+
+      img {
+        width: 80%;
+        height: auto;
+      }
+    }
+
+    .welcome__contenedor-informacion {
+      flex: none;
+
+      h1 {
+        font-size: 32px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+    }
+  }
+}

@@ -1,12 +1,22 @@
 
 <!-- ENVUELVE EL CONTENIDO -->
-<div class="home__contenedor">
+<div class="home__contenedor" [class.mobile-menu-open]="menuMovilAbierto()">
+
+  <!-- MENÚ RESPONSIVE -->
+  <div class="mobile-nav">
+    <div class="mobile-nav__logo">
+      <span>Restaurante</span>
+    </div>
+    <button class="mobile-nav__hamburger" (click)="palancaMenuMovil()">
+      <span class="material-symbols-rounded">menu</span>
+    </button>
+  </div>
 
   <!-- MENÚ -->
   <div class="home__contenedor-menu">
     <div class="home__contenedor-menu-lista">
       @for (item of menuItem(); track item.urlPath) {
-        <div [routerLink]="item.urlPath" class="home__contenedor-menu-lista-item">
+        <div [routerLink]="item.urlPath" class="home__contenedor-menu-lista-item" (click)="cerrarMenuMovil()">
           <span class="material-symbols-rounded home__icon-material">{{item.icono}}</span>
           <p>{{item.titulo}}</p>
         </div>

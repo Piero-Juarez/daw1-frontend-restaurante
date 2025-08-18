@@ -1,6 +1,6 @@
 <div class="menu-contenedor">
   <div class="menu__categorias">
-    @for (categoria of categorias; track categoria.id) {
+    @for (categoria of categorias(); track categoria.id) {
       <button type="button" (click)="seleccionarCategoria(categoria.nombre)"
               [class.active]="categoria.nombre === buscarPorCategoria">
         {{ categoria.nombre }}
@@ -16,7 +16,7 @@
 
   <div class="menu__opciones">
     <div class="menu__opciones-boton">
-      <button class="boton-opciones">
+      <button class="boton-opciones" (click)="abrirModalCrearEditar()">
         <span class="material-symbols-rounded">add</span>
         Añadir Nuevo Item
       </button>
@@ -39,12 +39,12 @@
   </div>
 
   <div class="menu__items-grid">
-    @if (items.length === 0) {
+    @if (items().length === 0) {
       <div>
         <p style="font-size: 24px;">No se encontraron resultados.</p>
       </div>
     }
-    @for (item of items; track item.id) {
+    @for (item of items(); track item.id) {
       <div class="menu__items">
         <div class="menu__items-contenedor">
           <div class="menu__items-info">
@@ -61,15 +61,15 @@
             </div>
           </div>
           <div class="menu__items-estado">
-            <select [class.disabled]="item.estado === 'Deshabilitado'" (change)="cambiarEstado(item.id)">
+            <select [class.disabled]="item.estado === 'Deshabilitado'" (change)="cambiarEstado(item.id, $event)">
               <option value="DISPONIBLE" [selected]="item.estado === 'Disponible'">Disponible</option>
               <option value="DESHABILITADO" [selected]="item.estado === 'Deshabilitado'">Deshabilitado</option>
             </select>
           </div>
         </div>
         <div class="menu__items-acciones">
-          <button class="btn editar">✏️ Editar Item</button>
-          <button class="btn eliminar">🗑️ Borrar de la Carta</button>
+          <button class="btn editar" (click)="abrirModalCrearEditar(item)">✏️ Editar Item</button>
+          <button class="btn eliminar" (click)="abrirModalEliminar(item)">🗑️ Borrar de la Carta</button>
         </div>
       </div>
     }
@@ -103,3 +103,77 @@
     </nav>
   }
 </div>
+
+<ajustes-modal [estadoAbierto]="modalCrearEditarVisible" (cerrarModal)="cerrarModalCrearEditar()">
+  <div slot="header">
+    <h3> {{ itemSeleccionado() ? 'Editar Item' : 'Crear Nuevo Item' }} </h3>
+  </div>
+
+  <div>
+    <form id="edicionItemMenu" [formGroup]="itemForm" (submit)="confirmarCrearEditar()">
+
+      <div class="input-contenedor">
+        <input id="nombre" type="text" formControlName="nombre" required />
+        <label for="nombre" class="label">Nombre</label>
+        <div class="lineado"></div>
+      </div>
+      <div class="input-contenedor">
+        <input id="descripcion" type="text" formControlName="descripcion" required />
+        <label for="descripcion" class="label">Descripción</label>
+        <div class="lineado"></div>
+      </div>
+      <div class="input-contenedor">
+        <input id="precio" type="number" step="0.50" formControlName="precio" required />
+        <label for="precio" class="label">Precio</label>
+        <div class="lineado"></div>
+      </div>
+      @if (itemSeleccionado()) {
+        <div>
+          <p><strong>Imagen Actual:</strong></p>
+          <img style="width: 150px; height: auto; border-radius: 12px;" src="{{itemSeleccionado()?.enlace_imagen}}" alt="Imagen de {{itemSeleccionado()?.nombre}}"/>
+        </div>
+      }
+      <div class="input-contenedor-file">
+        <label>{{ itemSeleccionado() ? 'Reemplazar imagen (opcional)' : 'Imagen del Item' }}</label>
+        <input id="imagen" type="file" (change)="onFileChange($event)" accept="image/jpeg, image/png, image/webp" #fileInput>
+        <label for="imagen" class="label-file">
+          {{ fileInput.files?.[0]?.name || 'Seleccionar Archivo...' }}
+        </label>
+      </div>
+      <div class="input-contenedor-select">
+        <label for="categoria">Categoría</label>
+        <select id="categoria" formControlName="idCategoria">
+          @for (categoria of categorias(); track categoria.id) {
+            <option value="{{categoria.id}}" [selected]="categoria.id === itemSeleccionado()?.categoria!.id">
+              {{categoria.nombre}}
+            </option>
+          }
+        </select>
+      </div>
+
+    </form>
+  </div>
+
+  <div slot="footer">
+    <button (click)="cerrarModalCrearEditar()" class="btn">Cancelar ❌</button>
+    <button form="edicionItemMenu" type="submit" [disabled]="itemForm.invalid" class="btn">
+      {{ itemSeleccionado() ? 'Actualizar ✅' : 'Crear ✅' }}
+    </button>
+  </div>
+</ajustes-modal>
+
+<ajustes-modal [estadoAbierto]="modalEliminarVisible" (cerrarModal)="cerrarModalEliminar()">
+  <div slot="header">
+    <h3>Eliminar Item</h3>
+  </div>
+
+  <div style="margin: 30px 0;">
+    <p>¿Estás seguro de eliminar este item?</p>
+    <p>Esta opción no se podrá deshacer.</p>
+  </div>
+
+  <div slot="footer">
+    <button (click)="cerrarModalEliminar()" class="btn">Cancelar ❌</button>
+    <button (click)="confirmarEliminacion()" class="btn">Eliminar ✅</button>
+  </div>
+</ajustes-modal>
