@@ -11,7 +11,7 @@ export function listadoMenu(): MenuItem[] {
     {
       urlPath: 'pedido',
       icono: 'order_play',
-      titulo: 'Hacer pedido',
+      titulo: 'Hacer Pedido',
       roles: ['Camarero']
     },
     {
@@ -19,6 +19,12 @@ export function listadoMenu(): MenuItem[] {
       icono: 'notifications',
       titulo: 'Ordenes',
       roles: ['Administrador', 'Cajero']
+    },
+    {
+      urlPath: 'ordenes-listas',
+      icono: 'order_approve',
+      titulo: 'Ordenes listas',
+      roles: ['Camarero', 'Cajero']
     },
     {
       urlPath: 'menu',

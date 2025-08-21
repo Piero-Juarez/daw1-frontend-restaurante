@@ -1,0 +1,91 @@
+<div class="ordenes-contenedor">
+  <div class="categorias">
+    <button (click)="seleccionarFiltro('PENDIENTE')" [class.activado]="filtroActivo() === 'PENDIENTE'">PENDIENTE</button>
+    <button (click)="seleccionarFiltro('PREPARANDO')" [class.activado]="filtroActivo() === 'PREPARANDO'">PREPARANDO</button>
+    <button (click)="seleccionarFiltro('COMPLETADA')" [class.activado]="filtroActivo() === 'COMPLETADA'">COMPLETADA</button>
+    <button (click)="seleccionarFiltro('CANCELADA')" [class.activado]="filtroActivo() === 'CANCELADA'">CANCELADA</button>
+  </div>
+
+  <div class="ordenes-grid">
+    @for (orden of ordenes(); track orden.id) {
+      <div class="tarjeta-orden">
+        <div class="tarjeta-cabecera">
+          <p>{{ orden.codigo_orden }}</p>
+          <p>{{ orden.numero_mesa }}</p>
+        </div>
+        <div class="tarjeta-contenido">
+          <h3>Contenido:</h3>
+          <ul>
+            @for (detalle of orden.detalles; track detalle.id) {
+              <li>
+                {{detalle.cantidad}} x {{ detalle.nombre_item_menu}} - {{detalle.total | currency: 'S/ '}}
+              </li>
+            }
+          </ul>
+        </div>
+        <div class="tarjeta-estado">
+          <select [disabled]="orden.estado_orden === 'Cancelada' || orden.estado_orden === 'Completada'" (change)="cambiarEstado(orden.id, $event)">
+            <option value="PENDIENTE" [selected]="orden.estado_orden === 'Pendiente'">Pendiente</option>
+            <option value="PREPARANDO" [selected]="orden.estado_orden === 'Preparando'">Preparando</option>
+            <option value="COMPLETADA" [selected]="orden.estado_orden === 'Completada'">Completada</option>
+            <option value="CANCELADA" [selected]="orden.estado_orden === 'Cancelada'">Cancelada</option>
+          </select>
+        </div>
+        <div class="tarjeta-piepagina">
+          <p>Total Orden: {{orden.monto_total | currency: 'S/ '}}</p>
+          @if (orden.estado_orden === 'Completada') {
+            <button (click)="abrirModalGenerarBoleta(orden)">Generar Boleta 🧾</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <nav class="menu__paginacion" aria-label="Paginación">
+      <button (click)="cargarDatos(0)" [disabled]="currentPage === 0">
+        <span class="material-symbols-rounded menu__icon-material-left">keyboard_double_arrow_left</span>
+        Primero
+      </button>
+      <button (click)="cargarDatos(currentPage - 1)" [disabled]="currentPage === 0">
+        <span class="material-symbols-rounded menu__icon-material-left">keyboard_arrow_left</span>
+        Anterior
+      </button>
+      @for (pageNum of pageNumbers; track pageNum) {
+        @if (pageNum !== '...') {
+          <button (click)="cargarDatos(pageNum - 1)" [class.active]="currentPage === pageNum - 1">{{ pageNum }}</button>
+        } @else {
+          <p>...</p>
+        }
+      }
+      <button (click)="cargarDatos(currentPage + 1)" [disabled]="currentPage >= totalPages - 1">
+        Siguiente
+        <span class="material-symbols-rounded menu__icon-material-right">keyboard_arrow_right</span>
+      </button>
+      <button (click)="cargarDatos(totalPages - 1)" [disabled]="currentPage >= totalPages - 1">
+        Último
+        <span class="material-symbols-rounded menu__icon-material-right">keyboard_double_arrow_right</span>
+      </button>
+    </nav>
+  }
+</div>
+
+<ajustes-modal [estadoAbierto]="modalGenerarBoleta" (cerrarModal)="cerrarModalGenerarBoleta()">
+  <div slot="header">
+    <h3>Generar Boleta de Consumo</h3>
+    <p>Orden: {{ordenSeleccionada()?.codigo_orden}}</p>
+    <p>Mesa: {{ordenSeleccionada()?.numero_mesa}}</p>
+    <p>Monto Total: {{ordenSeleccionada()?.monto_total | currency: 'S/ '}}</p>
+  </div>
+
+  <div class="input-contenedor">
+    <input id="dineroCliente" type="number" step="0.50" [(ngModel)]="dineroCliente" placeholder="Ingresar cantidad de dinero del cliente..." required/>
+    <label for="dineroCliente" class="label">Dinero Cliente:</label>
+    <div class="lineado"></div>
+  </div>
+
+  <div slot="footer">
+    <button (click)="cerrarModalGenerarBoleta()" class="btn">Cerrar Ventada ❌</button>
+    <button (click)="generarYMostrarBoleta()" [disabled]="this.dineroCliente < ordenSeleccionada()?.monto_total!" class="btn">Generar Boleta ✅</button>
+  </div>
+</ajustes-modal>

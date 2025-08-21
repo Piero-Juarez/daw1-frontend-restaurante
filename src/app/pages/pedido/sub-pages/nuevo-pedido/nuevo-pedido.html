@@ -1,0 +1,104 @@
+
+<div class="contenedor-nuevo-pedido">
+  @if (!mesaSeleccionada()) {
+    <header class="vista-encabezado">
+      <button (click)="volverAtras()" class="boton-atras">
+        <span class="material-symbols-rounded">arrow_back</span>
+        Volver
+      </button>
+      <h1>Seleccionar Mesa Disponible</h1>
+    </header>
+    <main class="contenedor-grid grid-mesas">
+      @for (mesa of mesas(); track mesa.id) {
+        <button (click)="seleccionarMesa(mesa)" class="item-grid">
+          <span class="material-symbols-rounded">table_restaurant</span>
+          <p>Mesa {{mesa.numero}}</p>
+          <p>Capacidad: {{mesa.capacidad}}</p>
+        </button>
+      }
+    </main>
+  }
+
+  @if (mesaSeleccionada()) {
+    <header class="vista-encabezado">
+      <button (click)="cambiarMesa()" class="boton-atras">
+        <span class="material-symbols-rounded">arrow_back</span>
+        Cambiar Mesa
+      </button>
+      <h1>Mesa Nº{{mesaSeleccionada()?.numero}}</h1>
+    </header>
+    <div class="menu-carrito-layout">
+      <div class="seccion-menu">
+        <h2>Menú</h2>
+        <div class="filtro-categorias">
+          @for (categoria of categorias(); track categoria.id) {
+            <button (click)="seleccionarCategoria(categoria.nombre)">
+              <p>{{categoria.nombre}}</p>
+            </button>
+          }
+        </div>
+        <div class="contenedor-grid grid-menu">
+          @for (item of items(); track item.id) {
+            <div (click)="item.estado !== 'Deshabilitado' && agregarItem(item)" class="item-grid item-menu" [class.disabled]="item.estado === 'Deshabilitado'">
+              <img [src]="item.enlace_imagen" [alt]="item.nombre" />
+              <p>{{item.nombre}}</p>
+              <h3>Precio: {{item.precio | currency:'S/ '}}</h3>
+            </div>
+          }
+        </div>
+        @if (totalPages > 1) {
+          <nav class="menu__paginacion" aria-label="Paginación">
+            @for (pageNum of pageNumbers; track pageNum) {
+              @if (pageNum !== '...') {
+                <button (click)="cargarItems(pageNum - 1)" [class.active]="currentPage === pageNum - 1">{{ pageNum }}</button>
+              } @else {
+                <p>...</p>
+              }
+            }
+          </nav>
+        }
+      </div>
+
+      <div class="seccion-carrito">
+        <h2>Orden Actual</h2>
+        @if (carrito().length === 0) {
+          <p class="carrito-vacio">Agrega un item del menú para comenzar la orden.</p>
+        } @else {
+          <table class="tabla-carrito">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Precio</th>
+                <th>Cant.</th>
+                <th>Total</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of carrito(); track item.id) {
+                <tr>
+                  <td>{{item.nombre}}</td>
+                  <td>S/{{item.precio}}</td>
+                  <td>{{item.cantidad}}</td>
+                  <td>S/{{item.subtotal}}</td>
+                  <td>
+                    <button (click)="eliminarItem(item.id)" class="boton-eliminar">
+                      <span class="material-symbols-rounded">delete</span>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+
+          <div class="total-carrito">
+            <h3>Total de la Orden: {{totalOrden() | currency:'S/ '}}</h3>
+          </div>
+        }
+        <button class="boton-crear-orden" (click)="crearOrden()" [disabled]="carrito().length === 0">
+          Crear Orden
+        </button>
+      </div>
+    </div>
+  }
+</div>

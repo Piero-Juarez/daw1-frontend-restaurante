@@ -1,0 +1,30 @@
+
+.opciones-pedido-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  button {
+    display: flex;
+    flex-direction: column;
+
+    width: 60%;
+    height: auto;
+    padding: 12px 15px;
+    margin: 20px;
+    border-radius: 12px;
+
+    border: none;
+    background-color: #E7191F;
+    color: white;
+
+    font-size: 24px;
+
+    span {
+      font-size: 64px;
+      font-weight: bold;
+    }
+  }
+}

@@ -90,17 +90,17 @@ export class Menu implements OnInit, OnDestroy {
 
   suscribirseACambios(): void {
     const itemAgregado = this.webSocketService.subscribe<ItemMenuResponse>('/topic/items-menu/guardado')
-    .subscribe(itemAgregado => {
-      this.items.update(current => {
-        const index = current.findIndex(i => i.id === itemAgregado.id);
-        if (index !== -1) {
-          current[index] = itemAgregado;
-          return [...current];
-        } else {
-          return [...current, itemAgregado];
-        }
+      .subscribe(itemAgregado => {
+        this.items.update(current => {
+          const index = current.findIndex(i => i.id === itemAgregado.id);
+          if (index !== -1) {
+            current[index] = itemAgregado;
+            return [...current];
+          } else {
+            return [...current, itemAgregado];
+          }
+        });
       });
-    });
 
     const itemActualizado = this.webSocketService.subscribe<ItemMenuResponse>('/topic/items-menu/editado')
       .subscribe(itemActualizado => {

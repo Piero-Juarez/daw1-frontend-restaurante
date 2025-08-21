@@ -13,7 +13,7 @@ import {AuthService} from '../../../../core/services/auth/auth.service';
         <h1>¡Bienvenido al sistema <br/>de Gestión Restaurante!</h1>
         <br/>
         <h2>Usuario: {{ authService.currentUser()?.nombre }} {{ authService.currentUser()?.apellido }}</h2>
-        <h2>Permisos: {{ authService.currentUser()?.rol }}</h2>
+        <h2>Puesto: {{ authService.currentUser()?.rol }}</h2>
       </div>
     </div>
   `,

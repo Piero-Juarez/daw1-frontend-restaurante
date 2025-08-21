@@ -1,0 +1,233 @@
+
+.ordenes-contenedor {
+  height: 100%;
+  padding: 24px;
+}
+
+.categorias {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background-color: #FFEFF0;
+    border: #e7191f 2px solid;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .activado {
+    background-color: #e7191f;
+    color: white;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    background-color: #e7191f;
+    color: white;
+  }
+}
+
+.ordenes-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 12px;
+  padding: 24px;
+  grid-template-columns: repeat(max(3), minmax(300px, 2fr));
+  overflow-y: auto;
+  max-height: calc(100vh - 170px);
+
+  .tarjeta-orden {
+    display: flex;
+    background-color: #e7191f;
+    border-radius: 12px;
+    padding: 16px;
+    flex-direction: column;
+    transition: transform 0.2s;
+
+    .tarjeta-cabecera {
+      display: flex;
+      justify-content: space-between;
+
+      p {
+        font-weight: bold;
+        color: white;
+      }
+    }
+
+    .tarjeta-contenido {
+      margin-top: 8px;
+
+      h3 {
+        color: white;
+      }
+    }
+
+    .tarjeta-estado {
+      width: 100%;
+
+      select {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 12px;
+        background-color: #FFEFF0;
+        border: #e7191f solid 2px;
+      }
+    }
+
+    .tarjeta-piepagina {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+
+      p{
+        font-weight: bold;
+        color: white;
+      }
+
+      button {
+        all: unset;
+        background-color: #FFEFF0;
+        color: #e7191f;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-weight: bolder;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .tarjeta-orden:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.btn {
+  all: unset;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.input-contenedor {
+  position: relative;
+  margin: 50px auto;
+  width: 400px;
+}
+
+.input-contenedor input {
+  font-size: 20px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  padding: 5px 0;
+  background-color: transparent;
+  outline: none;
+}
+
+.input-contenedor label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: black;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.input-contenedor input:focus ~ .label,
+.input-contenedor input:valid ~ .label {
+  top: -20px;
+  font-size: 16px;
+  color: #e7191f;
+}
+.input-contenedor input:read-only ~ .label {
+  top: -20px;
+  font-size: 16px;
+  color: #e7191f;
+}
+
+.input-contenedor .lineado {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #e7191f;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.input-contenedor input:focus ~ .lineado,
+.input-contenedor input:valid ~ .lineado {
+  transform: scaleX(1);
+}
+.input-contenedor input:read-only ~ .lineado {
+  transform: scaleX(1);
+}
+
+.menu__paginacion {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  gap: 16px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    background-color: #FFEFF0;
+    border: #e7191f 2px solid;
+    color: black;
+
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: bold;
+
+    transition: background 0.2s, transform 0.2s;
+
+    .menu__icon-material-left {
+      font-weight: bold;
+      margin-right: 3px;
+    }
+
+    .menu__icon-material-right {
+      font-weight: bold;
+      margin-left: 3px;
+    }
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    background-color: #e7191f;
+    color: white;
+  }
+
+  .active {
+    background-color: #e7191f;
+    color: white;
+  }
+}

@@ -11,6 +11,9 @@ import {Mesas} from './pages/ajustes/sub-pages/mesas/mesas';
 import {Menu} from './pages/menu/menu';
 import {Ordenes} from './pages/ordenes/ordenes';
 import {Pedido} from './pages/pedido/pedido';
+import {OpcionesPedido} from './pages/pedido/sub-pages/opciones-pedidos/opciones-pedido';
+import {NuevoPedido} from './pages/pedido/sub-pages/nuevo-pedido/nuevo-pedido';
+import {ActualizarPedido} from './pages/pedido/sub-pages/actualizar-pedido/actualizar-pedido';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -26,7 +29,15 @@ export const routes: Routes = [
       { path: 'bienvenida', component: Welcome },
       { path: 'menu', component: Menu },
       { path: 'ordenes', component: Ordenes },
-      { path: 'pedido', component: Pedido },
+      {
+        path: 'pedido',
+        component: Pedido,
+        children: [
+          { path: '', component: OpcionesPedido },
+          { path: 'nuevo', component: NuevoPedido },
+          { path: 'actualizar', component: ActualizarPedido }
+        ]
+      },
       {
         path: 'ajustes',
         component: Ajustes,

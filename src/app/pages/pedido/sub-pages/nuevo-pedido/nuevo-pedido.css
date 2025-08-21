@@ -1,0 +1,276 @@
+
+/* ========================================================== */
+/* ============== CONTENEDOR Y VISTA GENERAL ================ */
+/* ========================================================== */
+.contenedor-nuevo-pedido {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ocupa toda la altura disponible */
+  background-color: #FFEFF0;
+}
+
+.vista-encabezado {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #FFEFF0;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.vista-encabezado h1 {
+  font-size: 1.2rem;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1; /* El título ocupa el espacio central */
+}
+
+/* ========================================================== */
+/* ==================== BOTONES COMUNES ===================== */
+/* ========================================================== */
+.boton-atras {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  gap: 0.5rem; /* Espacio entre el icono y el texto */
+}
+
+.boton-crear-orden {
+  background-color: #212122;
+  color: white;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.boton-crear-orden:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* ========================================================== */
+/* ================= REJILLA (MESAS Y MENÚ) ================= */
+/* ========================================================== */
+.contenedor-grid {
+  display: grid;
+  padding: 0.5rem;
+  gap: 1rem; /* Espacio entre los items de la rejilla */
+}
+
+.grid-mesas {
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.item-grid {
+  background-color: #E7191F;
+  color: white;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.2s;
+  border: 2px solid transparent;
+
+  p {
+    color: white;
+  }
+}
+
+.item-grid:hover {
+  transform: translateY(-4px);
+}
+
+.grid-menu {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.item-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-menu img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.item-menu h3 {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+}
+
+.disabled {
+  opacity: 0.5;
+  background-color: #ccc;
+  color: #333;
+  border: #ccc solid 2px;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================================== */
+/* ============== MENU & CART VIEW =================== */
+/* ========================================================== */
+.menu-carrito-layout {
+  display: flex;
+  flex-direction: column; /* On mobile, the cart goes below the menu */
+  overflow-y: auto;
+}
+
+.seccion-menu {
+  padding: 1rem;
+}
+
+.filtro-categorias {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  overflow-x: auto; /* Allows horizontal scrolling for many categories */
+}
+
+.filtro-categorias button {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #E7191F;
+  cursor: pointer;
+  white-space: nowrap; /* Prevents button text from wrapping */
+
+  p {
+    color: white;
+  }
+}
+
+/* ========================================================== */
+/* ================== SECCIÓN DEL CARRITO =================== */
+/* ========================================================== */
+.seccion-carrito {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e0e0e0;
+  padding: 1rem;
+}
+
+.seccion-carrito h2 {
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.carrito-vacio {
+  text-align: center;
+  color: #888;
+  padding: 2rem 0;
+}
+
+.tabla-carrito {
+  width: 100%;
+  border-collapse: collapse; /* Une los bordes de las celdas */
+}
+
+.tabla-carrito th, .tabla-carrito td {
+  padding: 0.75rem 0.25rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabla-carrito th {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.tabla-carrito td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+  color: black;
+}
+
+.boton-eliminar {
+  background: none;
+  border: none;
+  color: #E7191F;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.total-carrito {
+  text-align: right;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.total-carrito h3 {
+  font-size: 1.25rem;
+  color: black;
+}
+
+/* ========================================================== */
+/* ===== ADAPTACIÓN PARA PANTALLAS GRANDES (DESKTOP) ======== */
+/* ========================================================== */
+@media (min-width: 1024px) {
+  .diseño-menu-carrito {
+    flex-direction: row; /* En escritorio, menú a la izquierda y carrito a la derecha */
+  }
+
+  .seccion-menu {
+    flex: 0.6; /* El menú ocupa el 60% del ancho */
+    overflow-y: auto; /* Permite scroll solo en la sección del menú */
+  }
+
+  .seccion-carrito {
+    flex: 0.4; /* El carrito ocupa el 40% */
+    border-top: none;
+    border-left: 1px solid #e0e0e0;
+  }
+
+  .grid-menu {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+/* ========================================================== */
+/* ===== BOTONES DE PAGINACIÓN ======== */
+/* ========================================================== */
+.menu__paginacion {
+  display: flex;
+  margin-top: 12px;
+  gap: 16px;
+
+  button {
+    display: flex;
+    cursor: pointer;
+
+    background-color: #FFEFF0;
+    border: #e7191f 2px solid;
+    color: black;
+
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: bold;
+
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    background-color: #e7191f;
+    color: white;
+  }
+
+  .active {
+    background-color: #e7191f;
+    color: white;
+  }
+}
