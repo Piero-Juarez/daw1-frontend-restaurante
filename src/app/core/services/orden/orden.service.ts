@@ -25,11 +25,15 @@ export class OrdenService {
   }
 
   // OBTENER LISTADO DE LAS ÓRDENES DEL DÍA Y ACTIVAS
-  obtenerOrdenesDelDia(page: number, size: number, estado?: string): Observable<PaginatedResponse<OrdenResponseDTO>> {
+  obtenerOrdenesDelDia(page: number, size: number, estados?: string[]): Observable<PaginatedResponse<OrdenResponseDTO>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-    if (estado) { params = params.set('estado', estado); }
+    if (estados && estados.length > 0) {
+      estados.forEach(estado => {
+        params = params.append('estado', estado);
+      })
+    }
     return this.http.get<PaginatedResponse<OrdenResponseDTO>>(`${this.fullApiUrl}/hoy`, {params});
   }
 
@@ -38,9 +42,19 @@ export class OrdenService {
     return this.http.get<OrdenResponseDTO>(`${this.fullApiUrl}/${id}`);
   }
 
+  // OBTENER UNA ÓRDEN A TRAVES DEL ID DE UNA MESA
+  obtenerOrdenPendientePorIdMesa(id: number): Observable<OrdenResponseDTO> {
+    return this.http.get<OrdenResponseDTO>(`${this.fullApiUrl}/por-mesa-pendiente/${id}`);
+  }
+
   // CREAR UNA NUEVA ÓRDEN
   crearOrden(orden: OrdenRequestDTO): Observable<OrdenResponseDTO> {
     return this.http.post<OrdenResponseDTO>(`${this.fullApiUrl}`, orden);
+  }
+
+  // PAGAR UNA ÓRDEN
+  pagarOrden(id: number): Observable<OrdenResponseDTO> {
+    return this.http.post<OrdenResponseDTO>(`${this.fullApiUrl}/pagar/${id}`, {});
   }
 
   // ACTUALIZAR UNA ÓRDEN PENDIENTE

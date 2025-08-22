@@ -1,0 +1,47 @@
+
+.reparto-contenedor {
+  height: 100%;
+  padding: 24px;
+}
+
+.ordenes-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 12px;
+  grid-template-columns: 1fr 1fr;
+
+  .tarjeta-orden {
+    display: flex;
+    background-color: #e7191f;
+    border-radius: 12px;
+    padding: 16px;
+    flex-direction: column;
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+
+  hr {
+    width: 100%;
+  }
+
+  .tarjeta-info {
+    p {
+      color: white;
+    }
+  }
+
+  .tarjeta-estado-reparto {
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .tarjeta-orden:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.tarjeta-orden.en-reparto {
+  opacity: 0.6;
+  cursor: pointer;
+}

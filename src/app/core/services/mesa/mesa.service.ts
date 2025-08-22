@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
 import {MesaResponse} from '../../models/mesa/MesaResponse';
@@ -21,6 +21,11 @@ export class MesaService {
   // OBTENER LISTADO DE MESAS DISPONIBLES
   obtenerMesasDisponibles(): Observable<MesaResponse[]> {
     return this.http.get<MesaResponse[]>(`${this.fullApiUrl}/disponibles`);
+  }
+
+  // OBTENER LISTADO DE MESAS CON ORDENES PENDIENTES
+  obtenerMesasConOrdenPendiente(): Observable<MesaResponse[]> {
+    return this.http.get<MesaResponse[]>(`${this.fullApiUrl}/con-orden-pendiente`);
   }
 
   // OBTENER UNA MESA POR ID

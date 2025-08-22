@@ -21,10 +21,10 @@ export function listadoMenu(): MenuItem[] {
       roles: ['Administrador', 'Cajero']
     },
     {
-      urlPath: 'ordenes-listas',
+      urlPath: 'reparto',
       icono: 'order_approve',
       titulo: 'Ordenes listas',
-      roles: ['Camarero', 'Cajero']
+      roles: ['Camarero']
     },
     {
       urlPath: 'menu',

@@ -14,6 +14,7 @@ import {Pedido} from './pages/pedido/pedido';
 import {OpcionesPedido} from './pages/pedido/sub-pages/opciones-pedidos/opciones-pedido';
 import {NuevoPedido} from './pages/pedido/sub-pages/nuevo-pedido/nuevo-pedido';
 import {ActualizarPedido} from './pages/pedido/sub-pages/actualizar-pedido/actualizar-pedido';
+import {Reparto} from './pages/reparto/reparto';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -29,6 +30,7 @@ export const routes: Routes = [
       { path: 'bienvenida', component: Welcome },
       { path: 'menu', component: Menu },
       { path: 'ordenes', component: Ordenes },
+      { path: 'reparto', component: Reparto },
       {
         path: 'pedido',
         component: Pedido,

@@ -116,10 +116,24 @@ export class NuevoPedido implements OnInit, OnDestroy {
         this.items.update(current => current.filter(i => i.id !== idItemEliminado));
       });
 
+    const actualizacionEstadoMesa = this.webSocketService.subscribe<MesaResponse>('/topic/mesas/estado')
+      .subscribe(mesaActualizada => {
+        this.mesas.update(current => {
+          const index = current.findIndex(m => m.id === mesaActualizada.id);
+          if (index !== -1) {
+            current[index] = mesaActualizada;
+            return [...current];
+          } else {
+            return [...current, mesaActualizada];
+          }
+        });
+      });
+
     this.subscription.add(itemAgregado);
     this.subscription.add(itemActualizado);
     this.subscription.add(actualizacionEstadoItem);
     this.subscription.add(eliminacionItem);
+    this.subscription.add(actualizacionEstadoMesa);
   }
 
   cargarMesas(): void {

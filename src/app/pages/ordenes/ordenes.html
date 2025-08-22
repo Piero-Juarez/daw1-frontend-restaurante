@@ -3,6 +3,9 @@
     <button (click)="seleccionarFiltro('PENDIENTE')" [class.activado]="filtroActivo() === 'PENDIENTE'">PENDIENTE</button>
     <button (click)="seleccionarFiltro('PREPARANDO')" [class.activado]="filtroActivo() === 'PREPARANDO'">PREPARANDO</button>
     <button (click)="seleccionarFiltro('COMPLETADA')" [class.activado]="filtroActivo() === 'COMPLETADA'">COMPLETADA</button>
+    <button (click)="seleccionarFiltro('EN_REPARTO')" [class.activado]="filtroActivo() === 'EN_REPARTO'">EN REPARTO</button>
+    <button (click)="seleccionarFiltro('ENTREGADA')" [class.activado]="filtroActivo() === 'ENTREGADA'">ENTREGADA</button>
+    <button (click)="seleccionarFiltro('PAGADA')" [class.activado]="filtroActivo() === 'PAGADA'">PAGADA</button>
     <button (click)="seleccionarFiltro('CANCELADA')" [class.activado]="filtroActivo() === 'CANCELADA'">CANCELADA</button>
   </div>
 
@@ -24,16 +27,26 @@
           </ul>
         </div>
         <div class="tarjeta-estado">
-          <select [disabled]="orden.estado_orden === 'Cancelada' || orden.estado_orden === 'Completada'" (change)="cambiarEstado(orden.id, $event)">
+          <select
+            [disabled]="orden.estado_orden === 'Cancelada' || orden.estado_orden === 'Completada' || orden.estado_orden === 'En_reparto'||
+            orden.estado_orden === 'Entregada' || orden.estado_orden === 'Pagada' || orden.estado_orden === 'Cancelada'"
+            (change)="cambiarEstado(orden.id, $event)"
+          >
             <option value="PENDIENTE" [selected]="orden.estado_orden === 'Pendiente'">Pendiente</option>
             <option value="PREPARANDO" [selected]="orden.estado_orden === 'Preparando'">Preparando</option>
             <option value="COMPLETADA" [selected]="orden.estado_orden === 'Completada'">Completada</option>
+            <option value="EN_REPARTO" [selected]="orden.estado_orden === 'En_reparto'" disabled>En Reparto</option>
+            <option value="ENTREGADA" [selected]="orden.estado_orden === 'Entregada'" disabled>Entregada</option>
+            <option value="PAGADA" [selected]="orden.estado_orden === 'Pagada'" disabled>Pagada</option>
             <option value="CANCELADA" [selected]="orden.estado_orden === 'Cancelada'">Cancelada</option>
           </select>
         </div>
         <div class="tarjeta-piepagina">
           <p>Total Orden: {{orden.monto_total | currency: 'S/ '}}</p>
-          @if (orden.estado_orden === 'Completada') {
+          @if (orden.estado_orden === 'Entregada') {
+            <button (click)="pagarOrden(orden.id)">Pagar Orden 💲</button>
+          }
+          @if (orden.estado_orden === 'Pagada') {
             <button (click)="abrirModalGenerarBoleta(orden)">Generar Boleta 🧾</button>
           }
         </div>

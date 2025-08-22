@@ -79,7 +79,7 @@ export class Ordenes implements OnInit, OnDestroy {
 
   cargarOrdenes(page: number = 0): void {
     const estado = this.filtroActivo();
-    this.ordenService.obtenerOrdenesDelDia(page, this.pageSize, estado).subscribe(response => {
+    this.ordenService.obtenerOrdenesDelDia(page, this.pageSize, [estado]).subscribe(response => {
       this.ordenes.set(response.content);
       this.currentPage = response.page.number;
       this.totalPages = response.page.totalPages;
@@ -103,7 +103,7 @@ export class Ordenes implements OnInit, OnDestroy {
 
     this.ordenService.cambiarEstadoOrden(id, estadoOrden).subscribe({
       error: (err) => console.log('Error al cambiar estado de la orden:', err)
-    })
+    });
   }
 
   generarYMostrarBoleta(): void {
@@ -139,7 +139,7 @@ export class Ordenes implements OnInit, OnDestroy {
   }
 
   cargarDatos(page: number = 0) {
-    const datosObservable = this.ordenService.obtenerOrdenesDelDia(page, this.pageSize, this.filtroActivo());
+    const datosObservable = this.ordenService.obtenerOrdenesDelDia(page, this.pageSize, [this.filtroActivo()]);
     datosObservable.subscribe(response => {
       this.ordenes.set(response.content);
       this.currentPage = response.page.number;
@@ -165,4 +165,11 @@ export class Ordenes implements OnInit, OnDestroy {
       }
     }
   }
+
+  pagarOrden(id: number) {
+    this.ordenService.pagarOrden(id).subscribe({
+      error: (err) => console.log('Error al pagar la orden:', err)
+    })
+  }
+
 }

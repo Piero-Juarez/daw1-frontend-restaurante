@@ -1,0 +1,25 @@
+
+<div class="reparto-contenedor">
+  <h1>ORDENES LISTAS</h1>
+
+  <div class="ordenes-grid">
+    @for (orden of ordenesParaRepartir(); track orden.id) {
+      <div class="tarjeta-orden" (click)="manejarClickOrden(orden)" [class.en-reparto]="orden.estado_orden.toUpperCase() === 'EN_REPARTO'">
+        <div class="tarjeta-info">
+          <p>{{orden.codigo_orden}}</p>
+          <p>{{orden.numero_mesa}}</p>
+          <p>Estado: {{orden.estado_orden}}</p>
+        </div>
+        <hr />
+        <div class="tarjeta-estado-reparto">
+          @if (orden.estado_orden.toUpperCase() === 'EN_REPARTO') {
+            <span>EN REPARTO...</span>
+          } @else {
+            <span>LISTO PARA RECOGER</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+</div>
