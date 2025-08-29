@@ -42,7 +42,7 @@ export class Menu implements OnInit, OnDestroy {
   currentPage: number = 0;
   totalPages: number = 0;
   totalElements: number = 0;
-  pageSize: number = 5;
+  pageSize: number = 8;
   pageNumbers: (number | '...')[] = [];
 
   buscarPorNombre: string = '';
