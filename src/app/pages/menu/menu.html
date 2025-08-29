@@ -56,8 +56,8 @@
               <p>{{ item.descripcion }}</p>
               <br/>
               <p><strong>Categoría:</strong> {{ item.categoria.nombre }}</p>
-              <p><strong>Precio:</strong> S/{{ item.precio.toFixed(2) }}</p>
-              <p><strong>IGV (18%):</strong> S/{{ (item.precio * 0.18) }}</p>
+              <p><strong>Precio:</strong> {{ item.precio | currency: 'S/ ' }}</p>
+              <p><strong>IGV (18%):</strong> {{ ((item.precio / 1.18) * 0.18) | currency: 'S/ ' }}</p>
             </div>
           </div>
           <div class="menu__items-estado">
@@ -127,6 +127,7 @@
         <label for="precio" class="label">Precio</label>
         <div class="lineado"></div>
       </div>
+      <p style="margin-top: -40px; margin-bottom: 35px; display: flex; justify-content: start;">IGV (18%): {{ montoIgv() | currency: 'S/ ' }}</p>
       @if (itemSeleccionado()) {
         <div>
           <p><strong>Imagen Actual:</strong></p>
@@ -145,7 +146,7 @@
         <select id="categoria" formControlName="idCategoria">
           @for (categoria of categorias(); track categoria.id) {
             <option value="{{categoria.id}}" [selected]="categoria.id === itemSeleccionado()?.categoria!.id">
-              {{categoria.nombre}}
+              {{categoria.nombre}} - Pre. Min. {{categoria.precio_minimo | currency: 'S/ '}}
             </option>
           }
         </select>

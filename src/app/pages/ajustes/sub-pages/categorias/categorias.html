@@ -11,6 +11,7 @@
         <p><strong>ID:</strong> {{categoria.id}}</p>
         <p><strong>Nombre:</strong> {{categoria.nombre}}</p>
         <p><strong>Descripción:</strong> {{categoria.descripcion}}</p>
+        <p><strong>Precio Mínimo:</strong> {{categoria.precio_minimo | currency: 'S/ '}}</p>
       </div>
       <div class="categorias__tarjeta-acciones">
         <button class="btn editar" (click)="abrirModalCrearEditar(categoria)">✏️ Editar</button>
@@ -51,6 +52,11 @@
     <div class="input-contenedor">
       <input id="descripcion" type="text" formControlName="descripcion" required>
       <label for="descripcion" class="label">Descripción</label>
+      <div class="lineado"></div>
+    </div>
+    <div class="input-contenedor">
+      <input id="precioMinimo" type="number" formControlName="precio_minimo" required>
+      <label for="precioMinimo" class="label">Precio Mínimo</label>
       <div class="lineado"></div>
     </div>
   </form>

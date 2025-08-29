@@ -11,6 +11,7 @@ import {Modal} from '../../shared/components/ajustes/modal/modal';
 import {fileTypeValidators} from '../../core/validators/file-type.validators';
 import {ItemMenuRequest} from '../../core/models/menu/ItemMenuRequest';
 import {ImgbbService} from '../../core/services/imgbb/imgbb.service';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'menu',
@@ -19,7 +20,8 @@ import {ImgbbService} from '../../core/services/imgbb/imgbb.service';
   imports: [
     FormsModule,
     Modal,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CurrencyPipe
   ],
   styleUrls: ['./menu.css']
 })
@@ -36,6 +38,7 @@ export class Menu implements OnInit, OnDestroy {
 
   items = signal<ItemMenuResponse[]>([]);
   itemSeleccionado = signal<ItemMenuResponse | null>(null);
+  montoIgv = signal<number>(0);
   currentPage: number = 0;
   totalPages: number = 0;
   totalElements: number = 0;
@@ -82,6 +85,16 @@ export class Menu implements OnInit, OnDestroy {
   ngOnInit() {
     this.cargarDatos();
     this.suscribirseACambios();
+
+    const precioSubscripcionCambios = this.itemForm.get('precio')?.valueChanges.subscribe(nuevoPrecio => {
+      const precioNumerico = Number(nuevoPrecio) || 0;
+      const montoIgv = (precioNumerico / 1.18) * 0.18;
+      this.montoIgv.set(montoIgv);
+    });
+
+    if (precioSubscripcionCambios) {
+      this.subscription.add(precioSubscripcionCambios);
+    }
   }
 
   ngOnDestroy(): void {
@@ -220,11 +233,13 @@ export class Menu implements OnInit, OnDestroy {
         idCategoria: item.categoria.id,
         estado: item.estado
       });
+      this.montoIgv.set((item.precio / 1.18) * 0.18);
     } else {
       this.itemSeleccionado.set(null);
       this.itemForm.reset({
         idCategoria: 1
       });
+      this.montoIgv.set(0);
       imagenControl?.setValidators([
         Validators.required,
         fileTypeValidators(this.allowedImageTypes)

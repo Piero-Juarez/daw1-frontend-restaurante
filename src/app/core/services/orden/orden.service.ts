@@ -54,7 +54,7 @@ export class OrdenService {
 
   // PAGAR UNA ÓRDEN
   pagarOrden(id: number): Observable<OrdenResponseDTO> {
-    return this.http.post<OrdenResponseDTO>(`${this.fullApiUrl}/pagar/${id}`, {});
+    return this.http.patch<OrdenResponseDTO>(`${this.fullApiUrl}/pagar/${id}`, {});
   }
 
   // ACTUALIZAR UNA ÓRDEN PENDIENTE

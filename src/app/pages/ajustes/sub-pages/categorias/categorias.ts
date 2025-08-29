@@ -6,6 +6,7 @@ import {CategoriaResponse} from '../../../../core/models/categoria/CategoriaResp
 import {Subscription} from 'rxjs';
 import {CategoriaRequest} from '../../../../core/models/categoria/CategoriaRequest';
 import {Modal} from '../../../../shared/components/ajustes/modal/modal';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'ajustes-categorias',
@@ -13,7 +14,8 @@ import {Modal} from '../../../../shared/components/ajustes/modal/modal';
   templateUrl: './categorias.html',
   imports: [
     Modal,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CurrencyPipe
   ],
   styleUrls: ['./categorias.css', '../sub-pages.css']
 })
@@ -32,7 +34,8 @@ export class Categorias implements OnInit, OnDestroy {
 
   categoriaForm = this.formBuilder.group({
     nombre: ['', [Validators.required]],
-    descripcion: ['', [Validators.required, Validators.maxLength(150)]]
+    descripcion: ['', [Validators.required, Validators.maxLength(150)]],
+    precio_minimo: [0, [Validators.required]]
   })
 
   ngOnInit(): void {
@@ -79,7 +82,8 @@ export class Categorias implements OnInit, OnDestroy {
       this.categoriaSeleccionada.set(categoria);
       this.categoriaForm.patchValue({
         nombre: categoria.nombre,
-        descripcion: categoria.descripcion
+        descripcion: categoria.descripcion,
+        precio_minimo: categoria.precio_minimo
       });
     } else {
       this.categoriaSeleccionada.set(null);
@@ -93,7 +97,8 @@ export class Categorias implements OnInit, OnDestroy {
     if (categoriaEditada) {
       const datosActualizados: Partial<CategoriaRequest> = {
         nombre: this.categoriaForm.value.nombre!,
-        descripcion: this.categoriaForm.value.descripcion!
+        descripcion: this.categoriaForm.value.descripcion!,
+        precio_minimo: this.categoriaForm.value.precio_minimo!
       }
       this.categoriaService.actualizarCategoria(categoriaEditada.id!, datosActualizados as CategoriaRequest).subscribe({
         next: () => this.cerrarModalCrearEditar(),

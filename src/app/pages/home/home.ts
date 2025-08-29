@@ -2,6 +2,7 @@ import {Component, computed, inject, Signal, signal} from '@angular/core';
 import {AuthService} from '../../core/services/auth/auth.service';
 import {RouterModule, RouterOutlet} from '@angular/router';
 import {listadoMenu, MenuItem} from './models/MenuItem';
+import {OrdenService} from '../../core/services/orden/orden.service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,8 @@ import {listadoMenu, MenuItem} from './models/MenuItem';
 export class Home {
 
   authService = inject(AuthService);
+  ordenService = inject(OrdenService);
+
   private allMenuItems: MenuItem[] = listadoMenu();
   menuMovilAbierto = signal(false);
 
@@ -40,6 +43,10 @@ export class Home {
   }
 
   logout(): void {
+    this.ordenService.desactivarOrdenes().subscribe({
+      next: () => console.log('Ordenes PAGAGA y CANCELADA desactivadas.'),
+      error: err => console.error('Error al desactivar las ordenes.', err)
+    });
     this.authService.logout();
   }
 
